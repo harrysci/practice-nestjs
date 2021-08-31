@@ -1,6 +1,7 @@
 
-import { Body, Controller, Get, Param, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { User } from './users.entity';
 import { UsersService } from './users.service';
 
 
@@ -22,10 +23,8 @@ export class createUserInfoReq {
   lastName: string;
 }
 export class updateUserInfoReq {
-  id: number;
+  userId: number;
   firstName: string;
-  lastName: string;
-  isActive : boolean;
 }
 export class updateUserInfoRes {
   id: number;
@@ -47,18 +46,32 @@ export class UsersController {
   async getUserList(): Promise<getUserListRes[]>{
     return await this.UsersService.getUserList();
   }
-  @Post('/createUser/:userId')
-  async createUserInfo(@Body() createUserData:createUserInfoReq): Promise<createUserInfoRes>{
+  @Post('/createUserInfo')
+  async createUserInfo(@Query() createUserData:createUserInfoReq): Promise<createUserInfoRes>{
     return await this.UsersService.createUserInfo(createUserData);
   } 
 
-  // @Put('/updateUser/:userId')
-  // async updateUserInfo(@Param('userId')  userId:number,
-  // @Body() updateUserInfo:updateUserInfoReq): Promise<updateUserInfoRes>{
-  //   return await this.UsersService.updateUserInfo(userId, updateUserInfo);
+  // @Get('/updateUserName')
+  // async updateUserName(@Param('userId')  userId:number,
+  // @Param('firstName') firstName: string
+  // ): Promise<any>{
+  //   //return userId;
+  //   return await this.UsersService.updateUserName(userId, firstName);
   // }
+  @Put('/updateUserName')
+  async updateUserName(@Query() req:updateUserInfoReq ): Promise<updateUserInfoRes>{
+    //return req.userId;
+    console.log(req.userId);
+    console.log(req.firstName);
+    return await this.UsersService.updateUserName(req.userId, req.firstName);
+  }
 
-
+  @Delete('/deleteUserName/:firstName')
+  async deleteUserName(
+    @Param('firstName') firstName: string,
+  ): Promise<User> {
+    return await this.UsersService.deleteUserName(firstName);
+  }
 
 
   @Get('login/kakao')
@@ -66,9 +79,14 @@ export class UsersController {
   async kakaoUser(@Req() req:any) {
     
   } 
-  @Get('login/kakao/callback')
+  @Get('login/callback')
   @UseGuards(AuthGuard('kakao'))
   kakaoLoginCallback(@Req() req:any){
     return this.UsersService.kakaoLogin(req);
+  }
+  @Get('logout')
+  @UseGuards(AuthGuard('kakao'))
+  kakaoLogout(@Req() req:any){
+    return this.UsersService.kakaoLogout(req);
   }
 }
