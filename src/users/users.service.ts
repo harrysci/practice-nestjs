@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { createUserInfoRes, getUserListRes, updateUserInfoReq, updateUserInfoRes } from './users.controller';
@@ -33,9 +33,19 @@ export class UsersService {
     })
     return userInfo;
   }
-  async updateUserInfo(
-    userId:number, 
-    updateUserInfo:updateUserInfoReq): Promise<updateUserInfoRes>{
+  // async updateUserInfo(
+  //   userId:number, 
+  //   updateUserInfo:updateUserInfoReq): Promise<updateUserInfoRes>{
       
+  // }
+
+  kakaoLogin(req:any){
+    if(!req.user) {
+      return new NotFoundException('유저가 없다구요!!!!!');
+    }
+    return {
+      message : '성공하셨습니다!1!1',
+      user : req.user,
+    };
   }
 }

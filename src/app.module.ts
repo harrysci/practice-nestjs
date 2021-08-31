@@ -8,10 +8,10 @@ import { User } from './users/users.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: 'database-1.cwj8gtuqvmts.us-east-2.rds.amazonaws.com',
       port: 3306,
-      username: 'root',
-      password: 'Xptmxm1212!@',
+      username: 'admin',
+      password: 'admin1111',
       database: 'test',
       entities: [User],
       synchronize: true,

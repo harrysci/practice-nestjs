@@ -1,4 +1,6 @@
-import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
+
+import { Body, Controller, Get, Param, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { UsersService } from './users.service';
 
 
@@ -50,9 +52,23 @@ export class UsersController {
     return await this.UsersService.createUserInfo(createUserData);
   } 
 
-  @Put('/updateUser/:userId')
-  async updateUserInfo(@Param('userId')  userId:number,
-  @Body() updateUserInfo:updateUserInfoReq): Promise<updateUserInfoRes>{
-    return await this.UsersService.updateUserInfo(userId, updateUserInfo);
+  // @Put('/updateUser/:userId')
+  // async updateUserInfo(@Param('userId')  userId:number,
+  // @Body() updateUserInfo:updateUserInfoReq): Promise<updateUserInfoRes>{
+  //   return await this.UsersService.updateUserInfo(userId, updateUserInfo);
+  // }
+
+
+
+
+  @Get('login/kakao')
+  @UseGuards(AuthGuard('kakao'))
+  async kakaoUser(@Req() req:any) {
+    
+  } 
+  @Get('login/kakao/callback')
+  @UseGuards(AuthGuard('kakao'))
+  kakaoLoginCallback(@Req() req:any){
+    return this.UsersService.kakaoLogin(req);
   }
 }

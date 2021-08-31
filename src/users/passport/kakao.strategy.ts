@@ -8,7 +8,7 @@ export class Kakaostrategy extends PassportStrategy(Strategy, 'kakao'){
   constructor() {
     super({
       clientID: '04d35cd6f3495d154efb248a6e9cde20',
-      clientSecret: '',
+      clientSecret: '97GQ8VhNfgMiWnb4ZdltiZZfHYwCTlqg',
       callbackURL: 'http://localhost:5000/users/login/kakao/callback',
     });
   }
