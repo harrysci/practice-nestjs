@@ -81,7 +81,7 @@ export class UsersService {
           })
           .execute();
         } catch {
-          throw new Error('deletion Error가 발생해버렸네요오~');
+          throw new Error('deletion Error가 발생해버렸어요~');
         }
       } else {
         throw new Error (
@@ -92,8 +92,9 @@ export class UsersService {
     }
   
   kakaoLogin(req:any){
+    console.log(req);
     if(!req.user) {
-      return new NotFoundException('유저가 없다구요!!!!!');
+      return new NotFoundException('유저가 없습니다');
     }
     return {
       message : '성공하셨습니다!1!1',

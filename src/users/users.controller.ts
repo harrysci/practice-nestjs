@@ -79,10 +79,10 @@ export class UsersController {
   async kakaoUser(@Req() req:any) {
     
   } 
-  @Get('login/callback')
+  @Get('login/kakao/callback')
   @UseGuards(AuthGuard('kakao'))
-  kakaoLoginCallback(@Req() req:any){
-    return this.UsersService.kakaoLogin(req);
+  async kakaoLogin(@Req() req:any){
+    return await this.UsersService.kakaoLogin(req);
   }
   @Get('logout')
   @UseGuards(AuthGuard('kakao'))
